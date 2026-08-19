@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assemble — HEC Paris Incubation & Acceleration Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --orange:#ff7a09;
+    --coral:#ff4b50;
+    --purple:#801b9d;
+    --indigo:#403387;
+    --blue:#193c6a;
+    --navy:#223058;
+    --mist:#f0f1f6;
+    --white:#ffffff;
+    --ink:#223058;
+    --ink-soft: rgba(34,48,88,.66);
+    --ink-faint: rgba(34,48,88,.4);
+    --accent: var(--orange);
+    --accent-2: var(--coral);
+    --radius: 20px;
+    --maxw: 1180px;
+    --ease: cubic-bezier(.22,.8,.3,1);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--white);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{ background: var(--orange); color:#fff; }
+  a{color:inherit;}
+  img,svg{display:block;}
+  h1,h2,h3{
+    font-family:'Fraunces',serif;
+    font-weight:700;
+    line-height:1.05;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  .eyebrow{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:.72rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--accent);
+    display:flex;
+    align-items:center;
+    gap:.5rem;
+  }
+  .eyebrow::before{
+    content:'';
+    width:18px;height:2px;
+    background:var(--accent);
+    display:inline-block;
+  }
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 32px; }
+  section{ position:relative; }
+  p{ color:var(--ink-soft); line-height:1.65; font-size:1.02rem; margin:0; }
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    backdrop-filter: blur(14px) saturate(1.4);
+    background:rgba(255,255,255,.78);
+    border-bottom:1px solid rgba(34,48,88,.08);
+    transition:border-color .3s var(--ease);
+  }
+  .nav-inner{
+    max-width:var(--maxw); margin:0 auto; padding:16px 32px;
+    display:flex; align-items:center; justify-content:space-between; gap:24px;
+  }
+  .brand{ display:flex; align-items:center; gap:10px; font-family:'Space Grotesk'; font-weight:700; font-size:1.05rem; letter-spacing:-.02em; }
+  .brand .dot{ width:9px; height:9px; border-radius:50%; background:var(--current, var(--orange)); transition:background .5s var(--ease); }
+  .brand small{ display:block; font-family:'Inter'; font-weight:500; font-size:.62rem; color:var(--ink-faint); letter-spacing:.03em; margin-top:1px; }
+  nav.links{ display:flex; gap:2px; }
+  nav.links button{
+    font-family:'Space Grotesk'; font-size:.82rem; font-weight:600;
+    background:none; border:none; cursor:pointer;
+    color:var(--ink-soft); padding:9px 14px; border-radius:100px;
+    transition:all .25s var(--ease);
+  }
+  nav.links button:hover{ color:var(--ink); background:var(--mist); }
+  nav.links button.active{ color:#fff; background:var(--current,var(--orange)); }
+  .cta-btn{
+    font-family:'Space Grotesk'; font-weight:700; font-size:.82rem;
+    background:var(--navy); color:#fff; border:none; padding:11px 20px;
+    border-radius:100px; cursor:pointer; white-space:nowrap;
+    transition:transform .25s var(--ease), background .25s var(--ease);
+  }
+  .cta-btn:hover{ background:var(--ink); transform:translateY(-2px); }
+  .cta-btn:focus-visible, nav.links button:focus-visible{ outline:3px solid var(--orange); outline-offset:2px; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:190px 0 120px;
+    position:relative;
+    overflow:hidden;
+  }
+  #node-canvas{
+    position:absolute; inset:0; width:100%; height:100%;
+    opacity:.55; pointer-events:none;
+  }
+  .hero-inner{ position:relative; z-index:2; }
+  .hero .eyebrow{ margin-bottom:22px; }
+  .hero h1{
+    font-size:clamp(2.6rem, 5.6vw, 5rem);
+    max-width:15ch;
+    background:linear-gradient(100deg, var(--navy) 30%, var(--purple) 60%, var(--orange) 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero p.lead{
+    max-width:640px; margin-top:26px; font-size:1.18rem; line-height:1.6; color:var(--ink-soft);
+  }
+  .hero-actions{ display:flex; gap:14px; margin-top:40px; flex-wrap:wrap; }
+  .btn-primary{
+    font-family:'Space Grotesk'; font-weight:700; font-size:.92rem;
+    background:var(--orange); color:#fff; border:none; padding:15px 26px;
+    border-radius:100px; cursor:pointer; transition:transform .25s var(--ease), box-shadow .25s var(--ease);
+    box-shadow:0 10px 30px -10px rgba(255,122,9,.6);
+  }
+  .btn-primary:hover{ transform:translateY(-3px); box-shadow:0 16px 34px -10px rgba(255,122,9,.7); }
+
+  /* persona pills */
+  .persona-pills{ display:flex; gap:12px; margin-top:56px; flex-wrap:wrap; }
+  .pill{
+    display:flex; align-items:center; gap:12px;
+    border:1.5px solid rgba(34,48,88,.14);
+    background:#fff; border-radius:18px; padding:16px 20px;
+    cursor:pointer; text-align:left; width:min(280px,100%);
+    transition:all .3s var(--ease);
+    font-family:'Inter';
+  }
+  .pill:hover{ border-color:var(--pill-color); transform:translateY(-4px); box-shadow:0 16px 30px -18px rgba(34,48,88,.4); }
+  .pill .pill-dot{
+    width:38px; height:38px; min-width:38px; border-radius:11px;
+    background:var(--pill-color); display:flex; align-items:center; justify-content:center;
+    color:#fff; font-family:'Space Grotesk'; font-weight:700; font-size:1rem;
+  }
+  .pill .pill-title{ font-weight:700; font-size:.92rem; color:var(--ink); }
+  .pill .pill-sub{ font-size:.76rem; color:var(--ink-faint); margin-top:2px; line-height:1.3; }
+
+  /* ---------- HOW IT WORKS ---------- */
+  .how{ padding:90px 0; background:var(--mist); }
+  .how-head{ max-width:620px; margin-bottom:56px; }
+  .how-head h2{ font-size:clamp(1.9rem,3vw,2.6rem); margin-top:14px; }
+  .how-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+  .how-card{
+    background:#fff; border-radius:var(--radius); padding:32px 28px;
+    border:1px solid rgba(34,48,88,.06);
+  }
+  .how-card .icon{
+    width:46px; height:46px; border-radius:13px; margin-bottom:20px;
+    display:flex; align-items:center; justify-content:center; color:#fff;
+    font-family:'Space Grotesk'; font-weight:700;
+  }
+  .how-card:nth-child(1) .icon{ background:var(--orange); }
+  .how-card:nth-child(2) .icon{ background:var(--purple); }
+  .how-card:nth-child(3) .icon{ background:var(--blue); }
+  .how-card h3{ font-size:1.15rem; margin-bottom:10px; }
+  .how-card p{ font-size:.95rem; }
+
+  /* ---------- STAT STRIP ---------- */
+  .stats{ padding:60px 0; }
+  .stats .wrap{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+  .stat{ text-align:left; border-left:2px solid rgba(34,48,88,.1); padding-left:18px; }
+  .stat .num{ font-family:'Fraunces'; font-weight:700; font-size:2.3rem; color:var(--ink); }
+  .stat .lbl{ font-size:.78rem; color:var(--ink-faint); margin-top:4px; line-height:1.3; }
+
+  /* ---------- PERSONA SECTION SHELL ---------- */
+  .persona-section{ padding:130px 0 110px; scroll-margin-top:90px; position:relative; }
+  .persona-section.alt{ background:var(--mist); }
+  .persona-section[data-theme="founder"]{ --accent:var(--orange); --accent-2:var(--coral); }
+  .persona-section[data-theme="corporate"]{ --accent:var(--indigo); --accent-2:var(--purple); }
+  .persona-section[data-theme="institution"]{ --accent:var(--blue); --accent-2:var(--navy); }
+  .persona-section .band{
+    position:absolute; top:0; left:0; right:0; height:5px;
+    background:linear-gradient(90deg, var(--accent), var(--accent-2));
+  }
+  .flash{ animation:flashglow 1.1s var(--ease); }
+  @keyframes flashglow{
+    0%{ box-shadow: inset 0 0 0 0 transparent; }
+    18%{ box-shadow: inset 0 0 0 4px var(--accent); }
+    100%{ box-shadow: inset 0 0 0 0 transparent; }
+  }
+
+  .p-header{ max-width:760px; margin-bottom:64px; }
+  .p-header h2{ font-size:clamp(2rem,4vw,3.1rem); margin-top:16px; line-height:1.08; }
+  .p-header p{ margin-top:20px; font-size:1.08rem; max-width:640px; }
+
+  .cardgrid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:10px; }
+  .prow{ display:grid; grid-template-columns:.85fr 1.15fr; gap:56px; align-items:start; padding:44px 0; border-top:1px solid rgba(34,48,88,.08); }
+  .prow h3{ font-size:1.5rem; line-height:1.2; }
+  .prow .prow-body p{ margin-bottom:14px; }
+  .prow ul{ margin:14px 0 0; padding:0; list-style:none; display:grid; gap:12px; }
+  .prow li{ padding-left:22px; position:relative; font-size:.98rem; color:var(--ink-soft); line-height:1.55; }
+  .prow li::before{ content:''; position:absolute; left:0; top:.55em; width:8px; height:8px; border-radius:50%; background:var(--accent); }
+  .prow li b{ color:var(--ink); }
+
+  /* office hours */
+  .oh-tabs{ display:flex; gap:8px; margin:8px 0 26px; }
+  .oh-tab{
+    font-family:'Space Grotesk'; font-weight:600; font-size:.82rem;
+    padding:9px 16px; border-radius:100px; border:1.5px solid rgba(34,48,88,.14);
+    background:#fff; cursor:pointer; color:var(--ink-soft); transition:all .25s var(--ease);
+  }
+  .oh-tab.active{ background:var(--accent); border-color:var(--accent); color:#fff; }
+  .expert-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  .expert-panel{ display:none; }
+  .expert-panel.active{ display:grid; }
+  .expert-card{
+    background:#fff; border:1px solid rgba(34,48,88,.08); border-radius:16px;
+    padding:20px 22px; cursor:pointer; transition:all .25s var(--ease);
+  }
+  .expert-card:hover{ border-color:var(--accent); transform:translateY(-2px); box-shadow:0 14px 26px -18px rgba(34,48,88,.35); }
+  .expert-card .tag{ font-family:'Space Grotesk'; font-size:.68rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--accent); }
+  .expert-card .who{ font-family:'Fraunces'; font-weight:600; font-size:1.02rem; margin-top:8px; color:var(--ink); }
+  .expert-card .about{ font-size:.87rem; color:var(--ink-soft); margin-top:6px; line-height:1.5; max-height:0; opacity:0; overflow:hidden; transition:all .35s var(--ease); }
+  .expert-card.open .about{ max-height:200px; opacity:1; margin-top:10px; }
+  .expert-card .plus{ float:right; font-family:'Space Grotesk'; color:var(--accent-faint,var(--accent)); transition:transform .3s var(--ease); }
+  .expert-card.open .plus{ transform:rotate(45deg); }
+
+  /* timeline (real sequence -> numbered ok) */
+  .timeline{ display:grid; gap:0; margin-top:10px; }
+  .tstep{ display:grid; grid-template-columns:70px 1fr; gap:24px; padding:30px 0; border-top:1px solid rgba(34,48,88,.08); }
+  .tstep .tnum{ font-family:'Fraunces'; font-weight:700; font-size:1.8rem; color:var(--accent); }
+  .tstep h3{ font-size:1.25rem; margin-bottom:8px; }
+
+  blockquote{
+    margin:0 0 60px; padding:34px 38px; background:#fff;
+    border-left:4px solid var(--accent); border-radius:0 16px 16px 0;
+    font-family:'Fraunces'; font-style:italic; font-size:1.15rem; line-height:1.55; color:var(--ink);
+  }
+  blockquote cite{ display:block; margin-top:16px; font-family:'Space Grotesk'; font-style:normal; font-size:.8rem; color:var(--ink-faint); }
+
+  .marquee-wrap{ overflow:hidden; margin-top:26px; -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent); mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent); }
+  .marquee{ display:flex; gap:52px; white-space:nowrap; width:max-content; animation:scroll 22s linear infinite; }
+  @keyframes scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+  .marquee span{ font-family:'Fraunces'; font-weight:600; font-size:1.4rem; color:var(--ink-faint); }
+
+  .close-block{ margin-top:70px; padding-top:50px; border-top:1px solid rgba(34,48,88,.1); display:flex; justify-content:space-between; align-items:flex-end; gap:40px; flex-wrap:wrap; }
+  .close-block p{ max-width:560px; font-size:1.08rem; color:var(--ink); }
+  .btn-persona{
+    font-family:'Space Grotesk'; font-weight:700; font-size:.92rem;
+    background:var(--accent); color:#fff; border:none; padding:16px 28px;
+    border-radius:100px; cursor:pointer; white-space:nowrap; transition:all .25s var(--ease);
+  }
+  .btn-persona:hover{ filter:brightness(1.08); transform:translateY(-2px); }
+
+  /* footer */
+  footer{ background:var(--navy); color:#fff; padding:80px 0 40px; }
+  footer h2{ color:#fff; font-size:clamp(1.8rem,3.4vw,2.6rem); max-width:16ch; }
+  footer p{ color:rgba(255,255,255,.6); margin-top:16px; max-width:480px; }
+  .foot-grid{ display:flex; justify-content:space-between; align-items:flex-end; gap:40px; flex-wrap:wrap; }
+  .foot-bottom{ margin-top:70px; padding-top:26px; border-top:1px solid rgba(255,255,255,.14); display:flex; justify-content:space-between; color:rgba(255,255,255,.45); font-size:.78rem; font-family:'Space Grotesk'; flex-wrap:wrap; gap:12px; }
+
+  @media (max-width: 900px){
+    nav.links{ display:none; }
+    .how-grid, .stats .wrap, .cardgrid, .expert-grid{ grid-template-columns:1fr; }
+    .prow{ grid-template-columns:1fr; gap:18px; }
+    .persona-pills{ flex-direction:column; }
+    .pill{ width:100%; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .marquee{ animation:none; }
+    *{ transition:none !important; animation:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand"><span class="dot" id="navDot"></span><div>Assemble<small>HEC Paris Incubation & Acceleration Center</small></div></div>
+    <nav class="links" id="navLinks">
+      <button data-goto="how">How it works</button>
+      <button data-goto="founder">Founders</button>
+      <button data-goto="corporate">Corporate</button>
+      <button data-goto="institution">Institutions</button>
+    </nav>
+    <button class="cta-btn" onclick="scrollToId('founder')">Apply now</button>
+  </div>
+</header>
+
+<section class="hero">
+  <canvas id="node-canvas"></canvas>
+  <div class="wrap hero-inner">
+    <div class="eyebrow">Assemble</div>
+    <h1>Every opportunity starts with the right people.</h1>
+    <p class="lead">Assemble is how the HEC Paris Incubation & Acceleration Center turns one ecosystem into thousands of meaningful opportunities. By carefully curating who meets whom, we help founders, corporates and institutions build relationships that move their businesses forward.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="scrollToId('how')">See how it works</button>
+    </div>
+
+    <div class="persona-pills">
+      <button class="pill" style="--pill-color:var(--orange)" data-goto="founder">
+        <span class="pill-dot">F</span>
+        <span>
+          <span class="pill-title">I'm a Founder</span>
+          <span class="pill-sub">Four months here replace the year you'd lose finding the right people alone.</span>
+        </span>
+      </button>
+      <button class="pill" style="--pill-color:var(--indigo)" data-goto="corporate">
+        <span class="pill-dot">C</span>
+        <span>
+          <span class="pill-title">I'm a Corporate</span>
+          <span class="pill-sub">What can your comex actually use on Monday?</span>
+        </span>
+      </button>
+      <button class="pill" style="--pill-color:var(--blue)" data-goto="institution">
+        <span class="pill-dot">I</span>
+        <span>
+          <span class="pill-title">I'm an Institution</span>
+          <span class="pill-sub">The value is the rooms your founders walk into.</span>
+        </span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="wrap">
+    <div class="how-head">
+      <div class="eyebrow">How Assemble works</div>
+      <h2>One ecosystem. Never a fixed catalogue.</h2>
+      <p style="margin-top:14px;">Assemble isn't a directory of contacts or a calendar of generic events. It's the engine behind every introduction, session and meeting inside the Center.</p>
+    </div>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="icon">01</div>
+        <h3>Curated communities</h3>
+        <p>Founders, corporate leaders, investors, professors and alumni, all inside one ecosystem — sorted by who actually has something to offer each other.</p>
+      </div>
+      <div class="how-card">
+        <div class="icon">02</div>
+        <h3>Tailored interactions</h3>
+        <p>Nothing is one-size-fits-all. Every meeting, format and session is chosen for where you are right now, not pulled from a fixed program.</p>
+      </div>
+      <div class="how-card">
+        <div class="icon">03</div>
+        <h3>Meaningful opportunities</h3>
+        <p>Access built to produce an outcome, not a networking afternoon: a deal, a hire, a round, a door that opens.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="wrap">
+    <div class="stat"><div class="num" data-count="1" data-suffix=" in 3">0</div><div class="lbl">French unicorns come from this ecosystem</div></div>
+    <div class="stat"><div class="num" data-count="25" data-suffix="%">0</div><div class="lbl">of all French VC funding</div></div>
+    <div class="stat"><div class="num" data-count="2300" data-suffix="">0</div><div class="lbl">man-days of student workforce, every year</div></div>
+    <div class="stat"><div class="num" data-count="5000" data-suffix="+">0</div><div class="lbl">startup-minded candidates on the job board</div></div>
+  </div>
+</section>
+
+<!-- ============ FOUNDER ============ -->
+<section class="persona-section" id="founder" data-theme="founder">
+  <div class="band"></div>
+  <div class="wrap">
+    <div class="p-header">
+      <div class="eyebrow">For Founders</div>
+      <h2>Four months here replace the year you'd lose finding the right people alone.</h2>
+      <p>Every meeting is chosen for where your business is right now. You come with a list of who you should be talking to — we challenge it, in case the room you're avoiding is the one that moves you forward, then put you in the right one. You won't need the same meetings whether you're raising your first round, hiring your 15th employee, or closing an enterprise-scale contract. Time is your most valuable resource: you only get the opportunities made for you.</p>
+    </div>
+
+    <div class="prow">
+      <h3>You need to sell.<br>Start with the rooms that took us years to open.</h3>
+      <div class="prow-body">
+        <p>Meet executives from La Banque Postale, Société Générale, Allianz, Capgemini, Kiabi, Sanofi — and the wider network of HEC Paris partners and alumni. We assess what's on the other side of the table and bring you in only when there's a real reason for you both to be there.</p>
+        <ul>
+          <li><b>A buyer who's ready</b> — a decision-maker actively looking for what you offer, briefed on you before you walk in.</li>
+          <li><b>A challenger who knows your market</b> — an executive from the industry you're cracking, telling you off the record what you're getting wrong, what breaks when you scale, and which door to knock on next.</li>
+        </ul>
+        <p style="margin-top:14px;">You leave with a live opportunity, or the insider knowledge that shortens the path to the next one.</p>
+      </div>
+    </div>
+
+    <div class="prow">
+      <h3>You need to raise.<br>We make sure investors meet you on your best day.</h3>
+      <div class="prow-body">
+        <p>We introduce you to investors chosen for your thesis, once you're actually ready.</p>
+        <ul>
+          <li><b>Ready first</b> — we get you investor-ready in-house, so you walk in fundable.</li>
+          <li><b>Matched, not mass-mailed</b> — one-to-one intros built on what each investor actually backs, plus small sessions where a single investor sees three or four founders pre-selected for their exact thesis.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="prow">
+      <h3>Hiring early is slow, expensive, and a gamble. We filter it and shorten it.</h3>
+      <div class="prow-body">
+        <p>Every year, 2,300 man-days of student workforce from design, communication and sales schools work for you as part of their curriculum — most of them near graduation, coached by experts.</p>
+        <p>Your next hire: a job board reaching 5,000+ startup-minded candidates, already filtered — HEC MBAs with ten years of experience, ready to run your finance, strategy or business development for a fraction of market rate, plus access to sought-after grande école interns.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:60px;">
+      <div class="eyebrow" style="margin-bottom:16px;">Get unstuck</div>
+      <h3 style="font-size:1.7rem; max-width:16ch; margin-bottom:8px;">We give you the one person who already solved what you're going through.</h3>
+      <p style="margin-bottom:26px; max-width:640px;">Book unlimited hours per week. You pick the ones who match where you are — we never send you to a session that doesn't move your business.</p>
+
+      <div class="oh-tabs">
+        <button class="oh-tab active" data-tab="operator">The operator who's been there</button>
+        <button class="oh-tab" data-tab="insider">The insider who opens doors</button>
+      </div>
+
+      <div class="expert-panel active expert-grid" data-panel="operator">
+        <div class="expert-card"><span class="plus">+</span><div class="tag">Corporate growth</div><div class="who">Ex-EVP Asia-Pacific, L'Oréal</div><div class="about">On cracking a corporate group from the inside.</div></div>
+        <div class="expert-card"><span class="plus">+</span><div class="tag">Exit</div><div class="who">Founder, 70x exit in a year</div><div class="about">Scaled sales from zero to a 70x exit in twelve months.</div></div>
+        <div class="expert-card"><span class="plus">+</span><div class="tag">Scaling ops</div><div class="who">Ex-network lead, Subway & Pizza Hut</div><div class="about">Ran 500+ points of sale — on what breaks when you scale.</div></div>
+        <div class="expert-card"><span class="plus">+</span><div class="tag">Bootstrapping</div><div class="who">Edtech founder, 3,000+ trained</div><div class="about">Bootstrapped to 3,000+ trained professionals with zero funding — building a sales machine and reaching your first €1M without raising a cent.</div></div>
+        <div class="expert-card"><span class="plus">+</span><div class="tag">Distribution</div><div class="who">Hardware founder, 150+ retailers</div><div class="about">Built a distribution network across 10 countries from a single hardware product.</div></div>
+        <div class="expert-card"><span class="plus">+</span><div class="tag">Equity & retention</div><div class="who">Ex-COO, QuickSign</div><div class="about">Scaled e-signature to 40M contracts a year across 15 countries — on building equity plans that actually motivate a team.</div></div>
+      </div>
+
+      <div class="expert-panel expert-grid" data-panel="insider">
+        <div class="expert-card"><span class="plus">+</span><div class="tag">Healthcare</div><div class="who">20 years selling into French hospitals & pharma</div><div class="about">On which door to knock on first.</div></div>
+        <div class="expert-card"><span class="plus">+</span><div class="tag">Retail</div><div class="who">30 years negotiating with Playmobil & Mattel buyers</div><div class="about">On how mass-retail buyers think before you walk in.</div></div>
+        <div class="expert-card"><span class="plus">+</span><div class="tag">Fundraising</div><div class="who">GP, fund backing Harvard, Stanford & Wharton founders</div><div class="about">On how US investors really think.</div></div>
+      </div>
+    </div>
+
+    <div class="close-block">
+      <p>The HEC Incubator sits inside the ecosystem behind one in three French unicorns and a quarter of all French VC funding. When we call on your behalf, people pick up.</p>
+      <button class="btn-persona">See if your startup fits →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CORPORATE ============ -->
+<section class="persona-section alt" id="corporate" data-theme="corporate">
+  <div class="band"></div>
+  <div class="wrap">
+    <div class="p-header">
+      <div class="eyebrow">For Corporates</div>
+      <h2>Your comex can tour a startup campus anywhere. The real question is what they can use on Monday.</h2>
+      <p>A tour inspires for an afternoon and fades by the weekend. What your leadership needs is a sharper instinct for spotting real innovation, and direct lines to the startups that could matter to your business. It stays productive because we prepare it against your priorities in advance — your teams work on your questions, with content chosen for you.</p>
+    </div>
+
+    <div class="cardgrid">
+      <div class="how-card">
+        <div class="icon" style="background:var(--indigo)">01</div>
+        <h3>Explore</h3>
+        <p>A guided, insider view of how universities, governments and corporates like Apple, Mistral AI and L'Oréal turn this campus into real value for 1,000 startups a year.</p>
+      </div>
+      <div class="how-card">
+        <div class="icon" style="background:var(--purple)">02</div>
+        <h3>Learn & Exchange</h3>
+        <p>The visit, plus a working session with HEC professors and mentors on de-risking collaboration, open innovation, and getting in-house innovation to market faster.</p>
+      </div>
+      <div class="how-card">
+        <div class="icon" style="background:var(--indigo)">03</div>
+        <h3>Engage & Connect</h3>
+        <p>The visit, plus matchmaking — Challenge My Strategy, Pitch & Deal, and one-to-one matchmaking for mixed groups.</p>
+      </div>
+    </div>
+
+    <div class="prow" style="margin-top:20px;">
+      <h3>The comex format,<br>for the top of the house.</h3>
+      <div class="prow-body">
+        <p>Your comex in a private room at the heart of Station F, a working session on your terms, curated startup exchanges built around your priorities, and lunch at La Felicità. Half-day and full-day formats.</p>
+        <div class="marquee-wrap">
+          <div class="marquee">
+            <span>TotalEnergies</span><span>Meta</span><span>L'Oréal</span><span>Caisse des Dépôts</span><span>Apple</span><span>Mistral AI</span>
+            <span>TotalEnergies</span><span>Meta</span><span>L'Oréal</span><span>Caisse des Dépôts</span><span>Apple</span><span>Mistral AI</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="close-block">
+      <p>You already know innovation matters. This is the day your leadership gets better at using it — leaving with sharper judgment, warm introductions to startups worth knowing, and concrete next steps.</p>
+      <button class="btn-persona">Design your comex day →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INSTITUTION ============ -->
+<section class="persona-section" id="institution" data-theme="institution">
+  <div class="band"></div>
+  <div class="wrap">
+    <div class="eyebrow">For Institutions</div>
+    <blockquote style="margin-top:20px;">
+      "The content of the lectures at HEC was the most practical and startup-oriented among the acceleration programs I have attended. Each expert's session was very well thought out, and the content was exactly right for planning the demo day and local incorporation."
+      <cite>— Founder, Japanese government cohort (J-StarX / METI)</cite>
+    </blockquote>
+
+    <div class="p-header" style="margin-bottom:56px;">
+      <h2>The value of this trip is the rooms your founders walk into — rooms they could never open on their own.</h2>
+      <p>We put your founders in front of the people who decide whether a solution enters the French market. On most tours, a delegation meets people whose job is to encourage them. Your founders meet people who came because they're genuinely looking for solutions that could change their industry.</p>
+    </div>
+
+    <div class="prow">
+      <h3>Why these rooms, and why those people showed up</h3>
+      <div class="prow-body">
+        <p>The quality comes from the agency's top alumni community — the people who let your founders reach into a European market that guards its introductions closely. If a founder's solution fits what these decision-makers need, that's the start of something real. If it doesn't fit yet, these are the exact people who'll tell them how to adapt it for the French market.</p>
+      </div>
+    </div>
+
+    <div class="prow">
+      <h3>We know who makes it here, and who doesn't</h3>
+      <div class="prow-body">
+        <p>Through delegations like Cosmet, Jetro and the Indian cohorts, we've seen clearly what separates the ones who break through from the ones who stall — and coach your founders toward the first group before they ever sit down. The founders who win treat this as the start of a relationship, not a transaction. Real deals tend to land around six months out, once they've done the follow-through.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:60px;">
+      <div class="eyebrow" style="margin-bottom:22px;">What a week actually looks like</div>
+      <div class="timeline">
+        <div class="tstep">
+          <div class="tnum">01</div>
+          <div><h3>Establish the strategy</h3><p>Ecosystem discovery from a leading figure in French tech, a go-to-market strategy grounded in real market insight, and lunches connecting founders to the right organizations.</p></div>
+        </div>
+        <div class="tstep">
+          <div class="tnum">02</div>
+          <div><h3>Confront it with the market</h3><p>One-to-one matchmaking with sector experts, live cold-calling and outreach clinics, and VC masterclasses on how French and European funding works.</p></div>
+        </div>
+        <div class="tstep">
+          <div class="tnum">03</div>
+          <div><h3>Prove it</h3><p>Pitch coaching and the introductions that matter. For longer programs (two weeks and up), this culminates in a demo day in front of real investors.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prow" style="margin-top:20px;">
+      <h3>We build it with you, to your budget</h3>
+      <div class="prow-body">
+        <p>We co-design the week around your founders, then run it end to end. Formats scale from a single immersive day to a full month — we cut or add modules to fit what you can spend. You give us the outcome you need and the number you have; we design backward from there.</p>
+      </div>
+    </div>
+
+    <div class="close-block">
+      <p>Your founders come home with a market they understand, access they can call on, and a clear read on whether Europe is theirs to win. That's what turns into deals.</p>
+      <button class="btn-persona">Explore delegation programs →</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h2>Every opportunity's hiding behind a corner.</h2>
+        <p>Assemble is one part of the HEC Paris Incubation & Acceleration Center. Tell us where you are, and we'll tell you who to meet.</p>
+      </div>
+      <button class="cta-btn" style="background:var(--orange)" onclick="scrollToId('founder')">Start the conversation</button>
+    </div>
+    <div class="foot-bottom">
+      <span>HEC Paris Incubation & Acceleration Center — Station F</span>
+      <span>Incubateur · Corporate Programs · International Gateway · Assemble</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---- smooth scroll helpers ----
+  function scrollToId(id){
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.scrollIntoView({behavior:'smooth', block:'start'});
+    el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+  }
+  document.querySelectorAll('[data-goto]').forEach(btn=>{
+    btn.addEventListener('click', ()=> scrollToId(btn.dataset.goto));
+  });
+
+  // ---- nav active state + accent dot on scroll ----
+  const sections = ['how','founder','corporate','institution'].map(id=>document.getElementById(id));
+  const navButtons = document.querySelectorAll('nav.links button');
+  const navDot = document.getElementById('navDot');
+  const accentMap = { how:'#223058', founder:'#ff7a09', corporate:'#403387', institution:'#193c6a' };
+
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const id = entry.target.id;
+        navButtons.forEach(b=> b.classList.toggle('active', b.dataset.goto===id));
+        navDot.style.background = accentMap[id] || '#ff7a09';
+      }
+    });
+  }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+  sections.forEach(s=> s && io.observe(s));
+
+  // ---- office hours tabs ----
+  document.querySelectorAll('.oh-tab').forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      document.querySelectorAll('.oh-tab').forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelectorAll('.expert-panel').forEach(p=>p.classList.remove('active'));
+      document.querySelector('.expert-panel[data-panel="'+tab.dataset.tab+'"]').classList.add('active');
+    });
+  });
+
+  // ---- expert card expand ----
+  document.querySelectorAll('.expert-card').forEach(card=>{
+    card.addEventListener('click', ()=> card.classList.toggle('open'));
+  });
+
+  // ---- count-up stats ----
+  const statEls = document.querySelectorAll('.num[data-count]');
+  const statIO = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const el = entry.target;
+        const target = parseInt(el.dataset.count,10);
+        const suffix = el.dataset.suffix || '';
+        const dur = 1400; const start = performance.now();
+        function tick(now){
+          const p = Math.min(1,(now-start)/dur);
+          const eased = 1-Math.pow(1-p,3);
+          el.textContent = Math.round(target*eased).toLocaleString('en-US') + suffix;
+          if(p<1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+        statIO.unobserve(el);
+      }
+    });
+  }, {threshold:.6});
+  statEls.forEach(el=> statIO.observe(el));
+
+  // ---- hero node network ----
+  const canvas = document.getElementById('node-canvas');
+  const ctx = canvas.getContext('2d');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let W,H,nodes=[];
+  const palette = ['#ff7a09','#ff4b50','#801b9d','#403387','#193c6a'];
+  function resize(){
+    const hero = document.querySelector('.hero');
+    W = canvas.width = hero.offsetWidth;
+    H = canvas.height = hero.offsetHeight;
+  }
+  function initNodes(){
+    nodes = Array.from({length: Math.min(42, Math.floor(W/28))}, ()=>({
+      x: Math.random()*W, y: Math.random()*H,
+      vx: (Math.random()-.5)*.35, vy:(Math.random()-.5)*.35,
+      r: Math.random()*2+1.4,
+      c: palette[Math.floor(Math.random()*palette.length)]
+    }));
+  }
+  let mouse = {x:-9999,y:-9999};
+  canvas.addEventListener('mousemove', e=>{
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = e.clientX-rect.left; mouse.y = e.clientY-rect.top;
+  });
+  canvas.addEventListener('mouseleave', ()=>{ mouse.x=-9999; mouse.y=-9999; });
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    nodes.forEach(n=>{
+      n.x += n.vx; n.y += n.vy;
+      if(n.x<0||n.x>W) n.vx*=-1;
+      if(n.y<0||n.y>H) n.vy*=-1;
+    });
+    for(let i=0;i<nodes.length;i++){
+      for(let j=i+1;j<nodes.length;j++){
+        const a=nodes[i], b=nodes[j];
+        const d = Math.hypot(a.x-b.x, a.y-b.y);
+        if(d<130){
+          ctx.strokeStyle = 'rgba(34,48,88,'+((1-d/130)*.14).toFixed(3)+')';
+          ctx.lineWidth=1;
+          ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+        }
+      }
+      const md = Math.hypot(n.x-mouse.x, n.y-mouse.y);
+      if(md<160){
+        ctx.strokeStyle = 'rgba(255,122,9,'+((1-md/160)*.5).toFixed(3)+')';
+        ctx.lineWidth=1.2;
+        ctx.beginPath(); ctx.moveTo(n.x,n.y); ctx.lineTo(mouse.x,mouse.y); ctx.stroke();
+      }
+    }
+    nodes.forEach(n=>{
+      ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+      ctx.fillStyle = n.c; ctx.globalAlpha=.85; ctx.fill(); ctx.globalAlpha=1;
+    });
+    if(!reduceMotion) requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', ()=>{ resize(); initNodes(); });
+  resize(); initNodes(); draw();
+</script>
+</body>
+</html>
